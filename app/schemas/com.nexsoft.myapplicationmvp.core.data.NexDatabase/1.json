@@ -1,0 +1,124 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "bde925b08d3880f883f144fe8a8a1fa5",
+    "entities": [
+      {
+        "tableName": "product",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `productCode` TEXT, `productName` TEXT, `UOMLevel` INTEGER NOT NULL, `uom1` TEXT, `uom2` TEXT, `uom3` TEXT, `uom4` TEXT, `conversion1to4` INTEGER NOT NULL, `conversion2to4` INTEGER NOT NULL, `conversion3to4` INTEGER NOT NULL, `sellingPriceUom1` REAL NOT NULL, `stock` INTEGER NOT NULL, `stockFreeGood` INTEGER NOT NULL, `stockcanvass` INTEGER NOT NULL, `stockdistributor` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "productCode",
+            "columnName": "productCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "productName",
+            "columnName": "productName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "UOMLevel",
+            "columnName": "UOMLevel",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uom1",
+            "columnName": "uom1",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uom2",
+            "columnName": "uom2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uom3",
+            "columnName": "uom3",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uom4",
+            "columnName": "uom4",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "conversion1to4",
+            "columnName": "conversion1to4",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "conversion2to4",
+            "columnName": "conversion2to4",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "conversion3to4",
+            "columnName": "conversion3to4",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sellingPriceUom1",
+            "columnName": "sellingPriceUom1",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stock",
+            "columnName": "stock",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stockFreeGood",
+            "columnName": "stockFreeGood",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stockCanvass",
+            "columnName": "stockcanvass",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stockDistributor",
+            "columnName": "stockdistributor",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bde925b08d3880f883f144fe8a8a1fa5')"
+    ]
+  }
+}
