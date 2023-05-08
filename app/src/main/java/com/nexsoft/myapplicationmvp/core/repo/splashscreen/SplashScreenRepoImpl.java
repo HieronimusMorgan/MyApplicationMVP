@@ -35,32 +35,37 @@ public class SplashScreenRepoImpl implements SplashScreenRepo {
 
     @Override
     public void doDownloadData(PostCallback callback) {
-        Call<String> request = service.doGetDatafeedNd6("NS0043060001161", "1533626265089", "f66f08c888c4479c", "getnxproduct");
-        request.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    new AsyncTask().getBackgroundThread().execute(() -> {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response.body());
-                            final ObjectMapper objectMapper = new ObjectMapper();
-                            JSONArray data = jsonObject.getJSONArray("data");
-                            for (int i = 0; i < data.length(); i++) {
-                                ProductModel arrObject = objectMapper.readValue(data.get(i).toString(), ProductModel.class);
-                                nexDataBase.splashScreenDAO().insertDataProduct(arrObject);
+        int count = nexDataBase.splashScreenDAO().getCountProduct();
+        if (count == 0) {
+            Call<String> request = service.doGetDatafeedNd6("NS0043060001161", "1533626265089", "f66f08c888c4479c", "getnxproduct");
+            request.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        new AsyncTask().getBackgroundThread().execute(() -> {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.body());
+                                final ObjectMapper objectMapper = new ObjectMapper();
+                                JSONArray data = jsonObject.getJSONArray("data");
+                                for (int i = 0; i < data.length(); i++) {
+                                    ProductModel arrObject = objectMapper.readValue(data.get(i).toString(), ProductModel.class);
+                                    nexDataBase.splashScreenDAO().insertDataProduct(arrObject);
+                                }
+                                new AsyncTask().getMainThread().execute(() -> callback.onEntityPosted("Success"));
+                            } catch (JSONException | IOException e) {
+                                new AsyncTask().getMainThread().execute(() -> callback.onErrorRequest(new Throwable("Failed")));
                             }
-                            new AsyncTask().getMainThread().execute(() -> callback.onEntityPosted("Success"));
-                        } catch (JSONException | IOException e) {
-                            new AsyncTask().getMainThread().execute(() -> callback.onErrorRequest(new Throwable("Failed")));
-                        }
-                    });
+                        });
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                callback.onErrorRequest(new Throwable(t));
-            }
-        });
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    callback.onErrorRequest(new Throwable(t));
+                }
+            });
+        } else {
+            new AsyncTask().getMainThread().execute(() -> callback.onEntityPosted("Success"));
+        }
     }
 }
